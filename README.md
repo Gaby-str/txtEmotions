@@ -58,3 +58,101 @@ Se elige **Naive Bayes** debido a:
 Aunque no capta matices complejos o contextos narrativos como lo haría una red neuronal, es suficientemente potente para el propósito del proyecto y representa un excelente punto de partida.
 
 ---
+---
+---
+
+# Metodología
+
+Para la metodología se realizan la siguiente serie de pasos.
+
+---
+
+### Instalar e importar librerías
+
+Para el trabajo se requiere el uso de variadas librerías, entre ellas las más notables:
+
+- **`sklearn`**: para todo lo relacionado a clasificadores y herramientas de vectorización.  
+- **`imblearn`**: para sobremuestreo con SMOTE.  
+- **`numpy`** y **`pandas`**: para la manipulación del set de datos.  
+- **`re`**: para el procesamiento de texto.
+
+---
+
+### Importar, explorar y procesar el dataset
+
+El contenido del dataset es texto en bruto, por lo que requiere de limpieza y transformación para poder ser utilizado en cualquier modelo de clasificación, como lo es **Multinomial Naive Bayes**.
+
+El dataset, con un total de **21.459 filas**, contiene dos columnas:
+
+- `Text`: El texto en bruto.  
+- `Emotion`: La emoción predominante (`sadness`, `anger`, `love`, `surprise`, `fear`, `happy`).  
+
+Ninguna de las columnas contiene valores nulos o vacíos.
+
+Posteriormente, se realiza un **countplot** para visualizar el balance de las categorías del dataset.
+
+---
+
+### Procesamiento del dataset
+
+Es necesario simplificar el texto, mantener solamente las palabras más **expresivas**, eliminando aquellas que sean irrelevantes: caracteres, signos, menciones, links/URLs y otro tipo de contenido basura, para mejorar el rendimiento final.
+
+Se aplican los siguientes pasos:
+
+1. Eliminar enlaces, menciones, hashtags (en caso de existir) y caracteres especiales.  
+2. Eliminar las *stopwords* determinadas y aplicar *stemming* para convertir las restantes a su forma raíz.  
+3. Reensamblar y guardar el texto procesado.  
+4. Añadir una nueva columna llamada `"Target"` para almacenar el valor numérico correspondiente a cada categoría en `"Emotion"`.
+
+Con este preprocesamiento, el dataset resultante es más limpio y óptimo para su posterior vectorización.
+
+---
+
+### División del dataset y vectorización
+
+Ahora que se posee un dataset limpio, se procede a **vectorizar** con el fin de generar una entrada válida para el clasificador Naive Bayes.
+
+Se utiliza el vectorizador **`TfidfVectorizer`**, ya que este considera el contexto estadístico de las palabras dentro del corpus, en lugar de simplemente contar las apariciones como lo hace `CountVectorizer`.
+
+El dataset es dividido, y los sets de entrenamiento y prueba son vectorizados.
+
+---
+
+### Sobremuestreo
+
+A fin de equilibrar el conjunto de datos, se **sobremuestrean las clases minoritarias** mediante la creación de muestras sintéticas a partir de las existentes, utilizando **SMOTE (Synthetic Minority Oversampling Technique)**.
+
+> Fuente: [Handling Imbalanced Datasets in Scikit-learn](https://datasciencehorizons.com/handling-imbalanced-datasets-in-scikit-learn-techniques-and-best-practices/)
+
+Para aplicar SMOTE, el set de entrenamiento se convierte a un array, ya que es el formato requerido.
+
+- Tamaño original del set de entrenamiento: **17.167** muestras (80%)  
+- Tamaño posterior al sobremuestreo: **33.888** muestras
+
+**[Gráfico del balance de clases]**
+
+---
+
+### Evaluar rendimiento con Cross Validation
+
+Con el set de datos ya procesado, vectorizado y reequilibrado, se procede a evaluar el rendimiento del clasificador **Multinomial Naive Bayes** utilizando validación cruzada (**Cross Validation**).
+
+---
+
+### Predicciones finales
+
+Se realizan las predicciones finales del modelo **Multinomial Naive Bayes** sobre el set de prueba.
+
+---
+
+### Reducción de dimensionalidad
+
+Se aplica la técnica de **mutual information** para reducir la dimensionalidad del espacio de características, pasando de **10.000 features** a **5.000** más relevantes.
+
+Luego, se realiza nuevamente la vectorización del set de entrenamiento usando únicamente estas features, y se evalúa el nuevo rendimiento del modelo.
+
+---
+
+### Evaluación con Bagging Classifier
+
+Finalmente, se evalúa un modelo clasificador basado en **Bagging** con `MultinomialNB`, con el objetivo de observar posibles mejoras en el rendimiento general.
