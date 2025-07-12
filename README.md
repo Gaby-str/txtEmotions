@@ -156,3 +156,105 @@ Luego, se realiza nuevamente la vectorización del set de entrenamiento usando �
 ### Evaluación con Bagging Classifier
 
 Finalmente, se evalúa un modelo clasificador basado en **Bagging** con `MultinomialNB`, con el objetivo de observar posibles mejoras en el rendimiento general.
+
+---
+---
+---
+
+# Resultados Obtenidos
+
+Antes de llegar a esta metodología de trabajo, se intentó realizar las clasificaciones con:
+
+1. CountVectorizer
+2. TfidfVectorizer
+3. TfidfVectorizer + SMOTE
+
+Con el fin de lograr el mejor rendimiento, obteniendo así los sigueintes resultados:
+
+
+#### Resultados *CountVectorizer* 
+
+##### Del cross validate
+f1 prom:  0.7281401033099608
+Accuracy prom:  0.7502185212639733
+
+##### Del modelo entrenado
+
+                   precision    recall  f1-score   support
+
+         sadness       0.77      0.91      0.84      1277
+           anger       0.87      0.71      0.78       617
+            love       0.78      0.36      0.50       318
+        surprise       0.68      0.19      0.30       168
+            fear       0.81      0.65      0.72       531
+           happy       0.76      0.91      0.83      1381
+
+        accuracy                           0.78      4292
+       macro avg       0.78      0.62      0.66      4292
+    weighted avg       0.78      0.78      0.76      4292
+
+
+
+#### Resultados *TfidfVectorizer*
+
+##### Del cross validate
+f1 prom:  0.5664388039206901
+Accuracy prom:  0.6415799920855612
+
+##### Del modelo entrenado
+
+                   precision    recall  f1-score   support
+
+         sadness       0.68      0.92      0.78      1277
+           anger       0.96      0.29      0.45       617
+            love       1.00      0.07      0.13       318
+        surprise       1.00      0.01      0.01       168
+            fear       0.90      0.24      0.38       531
+           happy       0.61      0.97      0.75      1381
+
+        accuracy                           0.66      4292
+       macro avg       0.86      0.42      0.42      4292
+    weighted avg       0.76      0.66      0.60      4292
+
+
+#### FINAL: Resultados *TfidfVectorizer + SMOTE sobremuestreo* 
+
+##### Del cross validate
+f1 prom:  0.902898308321791
+Accuracy prom:  0.9039187913125591
+
+##### Del modelo entrenado
+
+                   precision    recall  f1-score   support
+
+         sadness       0.88      0.87      0.87      1277
+           anger       0.84      0.80      0.82       617
+            love       0.59      0.78      0.67       318
+        surprise       0.54      0.73      0.62       168
+            fear       0.81      0.78      0.80       531
+           happy       0.87      0.82      0.84      1381
+
+        accuracy                           0.82      4292
+       macro avg       0.76      0.80      0.77      4292
+    weighted avg       0.83      0.82      0.82      4292
+
+
+---
+
+### Balances
+
+El balance original del dataset es:
+![Desbalance](./img/desbalance.png)
+
+Luego del Sobremuestreo, el balance resultante es:
+![Desbalance](./img/balanceado.png)
+
+---
+---
+---
+
+# Conclusiones
+
+Luego de realizar los procesos de probar alternativas para lograr un mejor rendimiento, se determinó que el uso de TfidfVectorizer es mejor que CountVectorizer. Esto se debe a que TfidfVectorizer no solo toma en cuenta la frecuencia de las palabras, sino que las pondera, y por tanto diferencia su importancia, dependiendo de la rareza e impacto que tienen estas para cada una de las categorías.
+
+El uso de SMOTE fue el que realmente ayudó en la mejora del rendimiento, puesto que el desbalance del dataset era el principal obstáculo a la hora de realizar un buen entrenamiento. La creación de nuevas muestras sintéticas a partir de las existentes ayudó mucho en este aspecto. Si bien duplicó el set de entrenamiento y por tanto afectó el rendimiento, mejoró óptimamente el rendimiento de los resultados.
