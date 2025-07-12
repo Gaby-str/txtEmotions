@@ -247,7 +247,7 @@ El balance original del dataset es:
 ![Desbalance](./img/desbalance.png)
 
 Luego del Sobremuestreo, el balance resultante es:
-![Desbalance](./img/balanceado.png)
+![Desbalance](./img/Balanceado.png)
 
 ---
 ---
