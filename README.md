@@ -131,8 +131,6 @@ Para aplicar SMOTE, el set de entrenamiento se convierte a un array, ya que es e
 - Tamaño original del set de entrenamiento: **17.167** muestras (80%)  
 - Tamaño posterior al sobremuestreo: **33.888** muestras
 
-**[Gráfico del balance de clases]**
-
 ---
 
 ### Evaluar rendimiento con Cross Validation
