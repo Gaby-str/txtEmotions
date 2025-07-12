@@ -116,13 +116,15 @@ Se utiliza el vectorizador **`TfidfVectorizer`**, ya que este considera el conte
 
 El dataset es dividido, y los sets de entrenamiento y prueba son vectorizados.
 
+> Fuente: [How can we use TFIDF vectors with multinomial naive bayes?](https://stackoverflow.com/questions/43237286/how-can-we-use-tfidf-vectors-with-multinomial-naive-bayes)
+
 ---
 
 ### Sobremuestreo
 
 A fin de equilibrar el conjunto de datos, se **sobremuestrean las clases minoritarias** mediante la creación de muestras sintéticas a partir de las existentes, utilizando **SMOTE (Synthetic Minority Oversampling Technique)**.
 
-> Fuente: [Handling Imbalanced Datasets in Scikit-learn](https://datasciencehorizons.com/handling-imbalanced-datasets-in-scikit-learn-techniques-and-best-practices/)
+> Fuente: [Handling Imbalanced Datasets in scikit-learn: Techniques and Best Practices](https://datasciencehorizons.com/handling-imbalanced-datasets-in-scikit-learn-techniques-and-best-practices/)
 
 Para aplicar SMOTE, el set de entrenamiento se convierte a un array, ya que es el formato requerido.
 
